@@ -1,4 +1,4 @@
-# PulseID
+d# PulseID
 
 **A universal digital medical ID.** One record per person, built around their
 National ID — instantly readable by any doctor with a login, and instantly
@@ -560,7 +560,7 @@ npm run followups -- --run-now       # or fire a sweep immediately, for testing
 
 ```bash
 cd frontend
-cp .env.example .env.local # SESSION_SECRET must match the backend's exactly
+cp .env.example .env # SESSION_SECRET must match the backend's exactly
 npm install
 npm run dev                 # starts on :3000
 ```
@@ -573,7 +573,7 @@ menu → "Install PulseID…" / "Add to Home Screen" on mobile).
 
 ```bash
 cd analytics
-cp .env.example .env.local # ANALYTICS_SERVICE_KEY must match the backend's exactly;
+cp .env.example .env # ANALYTICS_SERVICE_KEY must match the backend's exactly;
                             # set ANALYTICS_ADMIN_EMAIL/ANALYTICS_ADMIN_PASSWORD to
                             # bootstrap your first (admin) analyst account — add more
                             # named accounts later from the "Analysts" page;
