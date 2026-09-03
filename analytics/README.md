@@ -204,11 +204,21 @@ npm run dev                  # starts on :3100
 ```
 
 Open **http://localhost:3100** and sign in with `ANALYTICS_ADMIN_EMAIL` /
-`ANALYTICS_ADMIN_PASSWORD`. Add named accounts for other analysts from the
+`ANALYTICS_ADMIN_PASSWORD` (the login form pre-fills the default demo values
+— `admin@health.gov` / `change-this-password` — so you can just hit Sign in
+for local testing). Add named accounts for other analysts from the
 **Analysts** page once you're in (see "Analyst accounts & roles" above).
 Without an AI provider key set, everything still works except the four
 AI-powered pages (Ask, Alerts briefing, Bulletins, Resources) show a "not
 configured" message instead of generated text.
+
+> `.env.local` is only read once, at process startup — if you change
+> `ANALYTICS_SERVICE_KEY` or `ANALYTICS_ADMIN_PASSWORD` while `npm run dev`
+> is already running, restart it. And since the admin account only
+> auto-bootstraps when no analyst accounts exist yet, changing
+> `ANALYTICS_ADMIN_PASSWORD` after the app has already run once won't do
+> anything on its own — delete `analytics/data/` first so it re-bootstraps
+> with the new password.
 
 To also run the scheduled-bulletin job locally, in a second terminal:
 

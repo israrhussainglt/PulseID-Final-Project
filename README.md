@@ -305,6 +305,14 @@ deliberately never caches API responses or medical data, so installed users
 always see fresh, live data when online and a clear "you're offline" screen
 when they're not — never stale patient information passed off as current.
 
+The landing page (`frontend/components/LandingApp.tsx`) has two views: an
+**app-style launcher** (four big portal buttons — Patient / Doctor /
+Hospital Admin / Emergency Scan) and the **full marketing website**. A pill
+button top-left ("About PulseID" / "Back to app") toggles between them —
+available whether you're in a plain browser tab or the installed app — and
+the choice is remembered in `localStorage`. Installed launches default to
+the app launcher; browser tabs default to the website.
+
 ### Analytics — national/regional dashboard, aggregate-only
 A third, separate app for a different kind of user entirely: a public-health
 analyst who needs to know *"which region has how many cases of what"*, not
@@ -577,9 +585,20 @@ npm run dev                 # starts on :3100
 ```
 
 Open **http://localhost:3100** and sign in with `ANALYTICS_ADMIN_EMAIL` /
-`ANALYTICS_ADMIN_PASSWORD`. See `analytics/README.md` for more on how it's
-isolated from the doctor/patient side, and its own README section on
-per-analyst accounts, roles, and the audit log.
+`ANALYTICS_ADMIN_PASSWORD` (the login form pre-fills the default demo values
+— `admin@health.gov` / `change-this-password` — so you can just hit Sign in).
+See `analytics/README.md` for more on how it's isolated from the
+doctor/patient side, and its own README section on per-analyst accounts,
+roles, and the audit log.
+
+> **Note:** `.env`/`.env.local` files are only read once, at process
+> startup. If you edit `backend/.env` or `analytics/.env.local` (e.g. to
+> change `ANALYTICS_SERVICE_KEY`) while `npm run dev` is already running,
+> restart that process — otherwise the analytics dashboard will fail with
+> `503 Analytics API is not configured.` even though the file looks correct.
+> Also remember `ANALYTICS_SERVICE_KEY` must be byte-for-byte identical in
+> both `backend/.env` and `analytics/.env.local`, or every `/api/analytics/*`
+> call gets a `401` instead.
 
 ### Backend in Docker (recommended for anything beyond local dev)
 
@@ -642,6 +661,7 @@ The seed script prints these to your terminal, but for convenience:
 | Doctor  | `ayesha.raza@pulseid.dev` / `doctor123`        |
 | Hospital admin | `admin.lahoregeneral@pulseid.dev` / `hospitaladmin123` (see the "Regional hierarchy" section above for the full list of 8) |
 | Patient | National ID `35202-1234567-1` (OTP shown on screen after "Send code") |
+| Analytics (optional service) | `admin@health.gov` / `change-this-password` — pre-filled on the login form, from `ANALYTICS_ADMIN_EMAIL`/`ANALYTICS_ADMIN_PASSWORD` in `analytics/.env.local` |
 
 ## Deploying it for real
 

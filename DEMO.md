@@ -90,3 +90,13 @@ either one can see exactly why it fired.
   security demo; wait ~60s or restart the backend to clear it.
 - **Static QR card doesn't resolve** → confirm `qr_is_static = 1` for that
   patient: `sqlite3 backend/data/pulseid.db "SELECT full_name, qr_is_static FROM patients;"`
+- **Analytics: `503 Analytics API is not configured.`** → `backend/.env` is
+  missing `ANALYTICS_SERVICE_KEY`, or the backend process was already
+  running when you added it. `.env` is only read at startup — stop the
+  backend (Ctrl+C) and run `npm run dev` again after editing it.
+- **Analytics: `401` on dashboard data** → `ANALYTICS_SERVICE_KEY` in
+  `backend/.env` and `analytics/.env.local` must be byte-for-byte identical.
+- **Analytics login fails** → the admin account only auto-creates the
+  *first* time the app runs against an empty database. If you changed
+  `ANALYTICS_ADMIN_PASSWORD` after already running it once, delete
+  `analytics/data/` and restart so it re-bootstraps with the new password.
