@@ -53,7 +53,7 @@ on-screen demo OTP (no real SMS gateway needed for the demo). Show
 logged and visible to them.
 
 **The one twist worth calling out explicitly**: a *physical, printed* QR
-card can't rotate itself the way an in-app one does — so Dildidar's card is
+card can't rotate itself the way an in-app one does — so Dildar's card is
 deliberately exempted from the anti-replay rotation (`qr_is_static`) while
 every other patient's live QR still rotates on every scan. That's the kind
 of edge case that separates "made an app" from "thought about how it's
