@@ -10,7 +10,7 @@ export default function LoginPage() {
   // so testers can just hit "Sign in" without having to go dig up
   // credentials first.
   const [email, setEmail] = useState("admin@health.gov");
-  const [password, setPassword] = useState("112233445566");
+  const [password, setPassword] = useState("change-this-password");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
