@@ -1,0 +1,20 @@
+# syntax=docker/dockerfile:1
+#
+# A separate, much lighter image that just runs the bulletin scheduler
+# (scripts/scheduler.ts) as a long-lived process — no Next.js build, since
+# it never serves HTTP. Shares the same source and env vars as the main
+# analytics service; only the entrypoint differs.
+
+FROM node:20-alpine
+WORKDIR /app
+RUN apk add --no-cache python3 make g++
+COPY package.json package-lock.json* ./
+RUN npm install
+COPY . .
+
+ENV ANALYTICS_DATA_DIR=/app/data
+RUN addgroup -S pulseid && adduser -S pulseid -G pulseid && mkdir -p /app/data && chown pulseid:pulseid /app/data
+USER pulseid
+
+VOLUME ["/app/data"]
+CMD ["npx", "tsx", "scripts/scheduler.ts"]
