@@ -15,7 +15,7 @@ npm run dev                  # seeds the DB on first run, starts on :4000
 
 # Terminal 2 — frontend
 cd frontend
-cp .env.example .env.local   # defaults are fine for a local demo
+cp .env.example .env   # defaults are fine for a local demo
 npm install
 npm run dev                  # starts on :3000
 ```
